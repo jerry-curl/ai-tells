@@ -1,6 +1,6 @@
 # ai-tells
 
-A Claude skill that finds the phrases marking writing as machine-made, and cuts them without flattening the voice underneath.
+A Claude skill that finds the phrases mark writing as machine-made, and cuts them without flattening the voice underneath.
 
 There are already good lists of AI writing patterns. This one exists because they share a blind spot.
 
