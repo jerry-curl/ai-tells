@@ -1,94 +1,152 @@
-# ai-tells
+# AI Tells
 
-A Claude skill that finds the phrases mark writing as machine-made, and cuts them without flattening the voice underneath.
+**AI Tells** is a small, model-neutral writing skill for finding and removing phrases and constructions that make prose sound machine-made.
 
-There are already good lists of AI writing patterns. This one exists because they share a blind spot.
+The focus is not on banning individual words. It is on recognizing the *shape* of writing that announces its own importance, narrates its own emphasis, or falls into repetitive assistant-style templates.
 
-## The gap this fills
+The central rule:
 
-Every published list I could find is built from **encyclopedic and marketing prose**. Wikipedia's *Signs of AI writing* is the best of them and it catalogues 24 patterns from cleaning up Wikipedia articles. The vocabulary lists ("delve", "tapestry", "pivotal") come from analysing published content.
+> **Ban the construction, not the instances.**
 
-Encyclopedia articles never talk to the reader. Marketing copy talks *at* them.
+A phrase list can remove today's wording and still leave the grammar that produces tomorrow's variation.
 
-So none of those lists catch **an assistant narrating its own emphasis**:
+## What AI Tells does
 
-> "Worth noting: the deploy failed."
-> "Said plainly, this is the part that matters."
-> "Two things worth you knowing."
+AI Tells supports three modes:
 
-That family survives every existing sweep, and if you work with an AI assistant daily it is probably the pattern you are actually drowning in.
+- **WRITE** — silently avoid common AI tells while creating new prose.
+- **AUDIT** — detect and report meaningful tells without changing the text.
+- **REWRITE** — revise the text only when explicitly asked.
 
-## The rule underneath it
+The skill is designed to work with ChatGPT, Claude, local models, other assistants, or a human editing workflow.
 
-**A tell announces that a point matters instead of making it matter.**
+## What it does differently
 
-If a sentence needs a label telling the reader to pay attention, the sentence is not doing its job. Cut the label and keep the sentence. If the sentence cannot survive without its label, the sentence was the problem.
+Most AI-writing cleanup lists focus on obvious vocabulary such as *delve*, *tapestry*, *leverage*, or *in conclusion*.
 
-Or, sharper: *if you have to announce that something is worth noting, it probably isn't.*
+AI Tells also focuses on **meta-commentary**: language that tells the reader a point matters instead of making the point matter.
 
-## Ban the construction, not the instances
+Examples:
 
-This is the most useful thing here and it was learned by failing at it.
+- "It's worth noting that..."
+- "The key takeaway is..."
+- "To be clear..."
+- "And that's the point."
+- "What this means is..."
 
-A 54-note vault was swept clean of "worth noting", "worth knowing" and "worth keeping". **The very next message written by the same assistant contained "two things worth you knowing."**
+It also watches for constructions that simple search-and-replace cannot reliably catch:
 
-The strings were gone. The grammar survived and immediately grew a new variant.
+- self-narrating asides,
+- forced rule-of-three cadence,
+- repetitive sentence templates,
+- puffed-up transitions,
+- automatic sycophancy,
+- chatbot artifacts left in finished prose.
 
-So work at the level of the shape: `worth` + a gerund aimed at the reader's attention. Worth noting, worth knowing, worth you knowing, worth mentioning, worth saying, worth recording, worth stating, worth carrying. All the same move.
+## The `worth` rule
 
-**How people actually talk instead:**
+One of the most useful distinctions in the skill:
 
-> "I found a couple of things to tell you about."
-> "I found two things to let you know."
+`worth` + gerund is often a tell when it **grades information for the reader**.
 
-The difference is who the sentence is about. *Worth you knowing* is about the information's importance. *I found two things to tell you* is about a person who found something and is telling you.
+> "Two things are worth you knowing."
 
-## The line that stops this doing damage
+But it is ordinary English when it **judges whether an action is worth the effort**.
 
-`worth` + gerund is a tell when it grades **information** for the reader. Cut it.
+> "That domain is worth chasing."
 
-It is ordinary English when it grades an **action** as a good use of effort. "That domain is worth chasing." "Not worth retrying." "Worth revisiting if video work starts."
+Those are not the same construction. The skill is meant to use judgment, not blind replacement.
 
-Those weigh cost against benefit. They are opinions, and opinions are the thing that is supposed to survive.
+## Quick start
 
-In one real sweep, 83 instances were found and 17 were cut. The other 66 were assessments and stayed. **Judgement, not find-and-replace.**
+Copy `SKILL.md` into the instruction or skill system you use.
 
-The same caution applies to the vocabulary list. "Key" and "crucial" are ordinary English. What marks them is frequency and the puffery they usually arrive with.
+Then invoke it in one of three ways.
 
-## What it will not do
+### WRITE
 
-Strip the voice. A flattened, opinion-free paragraph reads as machine-made just as loudly as a puffed-up one. Removing an AI tell must not remove the personality with it.
+> Use AI Tells in WRITE mode. Draft a short product update for customers.
 
-Where this skill and the writer's own voice disagree, the voice wins.
+The skill should avoid the tells silently and return only the requested writing.
 
-## Install
+### AUDIT
 
-Claude Code, or anywhere skills live in a folder:
+> Use AI Tells in AUDIT mode on this draft. Do not rewrite it.
 
+The skill should report meaningful hits and suggested fixes.
+
+### REWRITE
+
+> Use AI Tells in REWRITE mode. Clean this draft without flattening my voice.
+
+The skill should return the revised text while preserving meaning and voice.
+
+## What the skill does not do
+
+AI Tells is not an "AI detector" and does not promise that text will be "undetectable."
+
+It also should not:
+
+- add fake typos or slang,
+- manufacture personal stories,
+- flatten personality,
+- replace precise technical terms just because they appear on a word list,
+- alter quotations, code, commands, citations, legal text, filenames, or other exact-content material without permission.
+
+The goal is better writing, not detector gaming.
+
+## Repository contents
+
+```text
+ai-tells/
+├── README.md
+├── LICENSE
+├── SKILL.md
+├── TESTS.md
+├── CHANGELOG.md
+└── examples/
+    ├── audit-example.md
+    └── before-after.md
 ```
-~/.claude/skills/ai-tells/SKILL.md
-```
 
-Drop `SKILL.md` there and it becomes available. Ask it to check a draft, or name a phrase you think is a tell and ask whether it is one.
+## Testing
 
-It **detects by default** and reports rather than rewriting. On your own prose, that is almost always the right behaviour.
+`TESTS.md` contains acceptance and regression tests for the public skill.
 
-## Method that works
+The tests cover:
 
-1. Grep for the phrase families. Seconds, and it catches most of it
-2. Read for what grep cannot see: the self-narrating aside, rule-of-three cadence, bold-as-default, synonym cycling
-3. Rewrite by exact string, never by regex. These are judgement calls, and a regex that matches something you did not picture mangles a document quietly
-4. **Re-run after fixing, every time.** A replacement can introduce a different tell. Real example from this project: "not just published copy" was rewritten to "Not only in published copy", which is a listed template
+- silent prevention in WRITE mode,
+- non-destructive AUDIT behavior,
+- meaning preservation,
+- contextual uses of `worth`,
+- technical-language exceptions,
+- protected exact-content material,
+- rule-of-three judgment,
+- replacement regressions,
+- voice preservation,
+- model neutrality.
 
-## Related work, so you can pick the right one
+## Contributions
 
-- `humanizer` carries 24 patterns from [Wikipedia's *Signs of AI writing*](https://en.wikipedia.org/wiki/Wikipedia:Signs_of_AI_writing) with before-and-after pairs. Better on a full chapter or anything going to print
-- `no-ai-slop` is a quick pass on a short draft
+If you find a new tell, the most useful contribution is not just the phrase. Describe the **construction** that generates the phrase and include:
 
-This skill covers the meta-commentary gap both leave. Do not run two and report the same finding twice.
+1. an example,
+2. why it reads as machine-made,
+3. a counterexample that should *not* be flagged,
+4. a regression test.
 
-## Licence and attribution
+That helps the skill improve without turning into a giant blacklist.
 
-**CC BY-SA 4.0.** Families 2 through 6 derive from Wikipedia's *Signs of AI writing*, which is CC BY-SA, so this inherits it. See `ATTRIBUTION.md` for the full list of sources.
+## License
 
-The meta-commentary family and the ban-the-construction rule came from a user noticing them in an assistant's own output. Those are the original contribution and they carry the same licence as the rest.
+MIT. See `LICENSE`.
+
+## Origin and acknowledgments
+
+**AI Tells was created and developed by Jerry Curl.**
+
+The project started with established public work on common AI-writing patterns, including institutional and community-maintained resources such as Wikipedia's *Signs of AI writing* / WikiProject AI Cleanup and other published vocabulary lists. Those resources provided a useful baseline.
+
+AI Tells then extends that baseline with additional observed patterns, especially assistant meta-commentary, construction-level detection, contextual judgment, protected-content rules, WRITE/AUDIT/REWRITE behavior, and regression-oriented testing.
+
+The public sources are acknowledged as inputs and reference material. They are not presented as the authors or owners of AI Tells.
