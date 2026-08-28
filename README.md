@@ -1,6 +1,6 @@
 # AI Tells
 
-**AI Tells** is a small, model-neutral writing skill for finding and removing phrases and constructions that make prose sound machine-made.
+**AI Tells** is a small, model-neutral skill for finding and removing the phrases and constructions that make writing sound machine-made.
 
 The focus is not on banning individual words. It is on recognizing the *shape* of writing that announces its own importance, narrates its own emphasis, or falls into repetitive assistant-style templates.
 
