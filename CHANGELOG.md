@@ -2,6 +2,16 @@
 
 All notable changes to AI Tells are documented here.
 
+## [1.1.0] — 2026-09-25
+
+### Added
+
+- Meta-commentary family: labels that grade a sentence instead of saying it.
+  - Drama adverbs such as "quietly".
+  - Honesty labels such as "one honest caveat", "to be honest" and "frankly", which imply the surrounding sentences were not honest.
+  - Build-up before news, such as "you should hear it from me first".
+- Regression tests 16 to 18 for the new patterns.
+
 ## [1.0.0] — 2026-08-27
 
 First public release of AI Tells, created and developed by Jerry Curl.

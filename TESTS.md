@@ -1,6 +1,6 @@
 # AI Tells — Tests
 
-These tests are the minimum acceptance and regression set for v1.0.0.
+These tests are the minimum acceptance and regression set for v1.1.0.
 
 ## 1. WRITE mode prevents tells silently
 
@@ -142,3 +142,30 @@ Pass:
 
 Pass:
 - `SKILL.md` does not require any named AI model to function
+
+## 16. Drama adverb is flagged
+
+Input:
+> The company quietly changed how it handles refunds.
+
+Pass:
+- flags "quietly"
+- suggests "The company changed how it handles refunds."
+
+## 17. Honesty label is flagged
+
+Input:
+> One honest caveat: the study only covered chains.
+
+Pass:
+- flags the honesty label
+- suggests "One caveat: the study only covered chains."
+
+## 18. Build-up before news is flagged
+
+Input:
+> There's something you should hear from me first. The launch slipped a week.
+
+Pass:
+- flags the build-up
+- suggests leading with the news, for example "The launch slipped a week."

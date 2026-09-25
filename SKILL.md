@@ -1,6 +1,6 @@
 ---
 name: ai-tells
-version: 1.0.0
+version: 1.1.0
 description: Detect and remove phrases and constructions that make writing sound machine-made, especially meta-commentary and self-narrating emphasis. Supports WRITE, AUDIT, and REWRITE modes. Preserves the writer's voice, protects exact-content material, and does not modify existing prose unless explicitly asked.
 ---
 
@@ -106,6 +106,16 @@ said plainly · stated plainly · worth noting · worth knowing · worth keeping
 Also watch for the **self-narrating aside**: a sentence that stops to explain why the previous sentence was included.
 
 No simple phrase search catches every version. Read for the construction.
+
+### Labels that grade a sentence instead of saying it
+
+Three more forms of the same construction. Each one attaches a label to a sentence rather than letting the sentence do the work.
+
+**Drama adverbs.** Watch for: quietly. *"What quietly stopped working."* *"The company quietly changed its policy."* People say something stopped, or changed, or happened while you weren't looking. Say what happened.
+
+**Honesty labels.** Watch for: one honest caveat · to be honest · honestly · in all honesty · frankly · candidly · the honest answer · I'll be honest. Marking one sentence as honest implies the others were not, which is the opposite of the effect intended. Write *"One caveat:"* and give it.
+
+**Build-up before news.** Watch for: you should hear it from me first · something you should hear from me · one thing I want to tell you · I want to be upfront with you. If there is something to say, say *"I need to tell you"* and then say it, or simply say it.
 
 ## Family 2. Throat-clearing openers
 
